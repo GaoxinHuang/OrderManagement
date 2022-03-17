@@ -9,19 +9,42 @@ namespace Order.Management
         public string Name { get; set; }
         public int Price { get; set; }
         public int AdditionalCharge { get; set; }
-        public int NumberOfRedShape { get; set; }
-        public int NumberOfBlueShape { get; set; }
-        public int NumberOfYellowShape { get; set; }
+
+        public readonly int NumberOfRedShape;
+        public readonly int NumberOfBlueShape;
+        public readonly int NumberOfYellowShape;
+
+        public Shape(int numberOfRedShape, int numberOfBlueShape, int numberOfYellowShape)
+        {
+            NumberOfRedShape = numberOfRedShape;
+            NumberOfBlueShape = numberOfBlueShape;
+            NumberOfYellowShape = numberOfYellowShape;
+            AdditionalCharge = 1;
+        }
+
         public int TotalQuantityOfShape()
         {
             return NumberOfRedShape + NumberOfBlueShape + NumberOfYellowShape;
         }
 
-        public int AdditionalChargeTotal()
+        private int RedTotal()
         {
-            return NumberOfRedShape * AdditionalCharge;
+            return (NumberOfRedShape * Price);
         }
-        public abstract int Total();
+        private int BlueTotal()
+        {
+            return (NumberOfBlueShape * Price);
+        }
+        private int YellowTotal()
+        {
+            return (NumberOfYellowShape * Price);
+        }
+
+        //public abstract int Total(); // If need, we could say public virtual int Total() to allow override in child class
+        public int Total()
+        {
+            return RedTotal() + BlueTotal() + YellowTotal();
+        }
 
     }
 }
